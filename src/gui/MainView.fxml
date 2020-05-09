@@ -20,7 +20,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#onMenuIteAboutAction" text="About" />
+                     <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="About" />
                   </items>
                 </Menu>
               </menus>
