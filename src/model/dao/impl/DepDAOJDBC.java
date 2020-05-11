@@ -60,6 +60,7 @@ public class DepDAOJDBC implements DepartmentDAO {
 	@Override
 	public void update(Department obj) {
 		PreparedStatement ps = null;
+		
 		try {
 			ps = conn.prepareStatement(
 				"UPDATE department " +

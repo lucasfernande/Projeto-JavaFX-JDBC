@@ -14,4 +14,12 @@ public class DepartServices {
 	     return dao.findAll();
 	}
 	
+	public void saveOrUpdate(Department obj) {
+		if (obj.getId() == null) { // se for id nulo, significa que será inserido um novo departamento
+			dao.insert(obj);
+		}
+		else {
+			dao.update(obj); // caso seja diferente de nulo, ele irá apenas atualizar
+		}
+	}
 }

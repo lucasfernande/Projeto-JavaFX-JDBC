@@ -85,6 +85,7 @@ public class DepartListController implements Initializable {
 			
 			DepartFormController controller = loader.getController();
 			controller.setDepartment(obj);
+			controller.setDepartService(new DepartServices());
 			controller.updateFormDate();
 			
 			Stage dialogStage = new Stage();
