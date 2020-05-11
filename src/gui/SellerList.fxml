@@ -28,8 +28,11 @@
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="tableColumnName" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
+            <TableColumn fx:id="tableColumnEmail" prefWidth="116.0" text="Email" />
+            <TableColumn fx:id="tableColumnBirthDate" prefWidth="74.0" text="Birth Date" />
+            <TableColumn fx:id="tableColumnBaseSalary" prefWidth="77.0" text="Base Salary" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="56.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="82.0" />
         </columns>
       </TableView>
    </children>
