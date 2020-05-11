@@ -113,6 +113,7 @@ public class DepartListController implements Initializable, DataChangeListener {
 																// acessada enquanto a janela não for fechada
 			dialogStage.showAndWait();
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
