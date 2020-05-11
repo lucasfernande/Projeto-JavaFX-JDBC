@@ -1,9 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -126,10 +128,10 @@ public class SellerFormController implements Initializable {
 		if (entity.getBirthDate() != null) {
 			txtBirthDate.setValue(LocalDate.ofInstant(entity.getBirthDate().toInstant(), ZoneId.systemDefault()));
 		}
-		if (entity.getDepart() == null) { // se o departamento for nulo, significa que um novo vendedor está sendo cadastrado
+		if (entity.getDepart() == null) { // se o departamento for nulo, significa que um novo vendedor está sendo
+											// cadastrado
 			comboBoxDepart.getSelectionModel().selectFirst(); // método para exibir o primeiro item do combobox
-		}
-		else {
+		} else {
 			comboBoxDepart.setValue(entity.getDepart());
 		}
 	}
@@ -149,21 +151,41 @@ public class SellerFormController implements Initializable {
 		}
 	}
 
-	private Seller getFormData() {
+	private Seller getFormData() { // pega os dados que foram preenchidos no formulário e carrega um objeto com
+									// esses dados
 		Seller obj = new Seller();
 
 		ValidationException exception = new ValidationException("Validation error");
 
 		obj.setId(Utils.tryParseToInt(txtId.getText())); // pegando o id do textField
 
-		if (txtName.getText() == null || txtName.getText().trim().equals("")) { // o trim() remove qualquer espaço em
-																				// branco do início e do final
-			exception.addError("name", "Field can't be empty"); // caso o if seja verdadeiro, significa que o campo está
-																// vazio
+		if (txtName.getText() == null || txtName.getText().trim().equals("")) { // o trim() remove qualquer espaço em branco do início e do final
+			exception.addError("name", "Field can't be empty"); // caso o if seja verdadeiro, significa que o campo está vazio													 
 		}
-
 		obj.setName(txtName.getText()); // pegando o nome do textField
-
+ 		
+		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) { 
+			exception.addError("email", "Field can't be empty"); 
+		}
+		obj.setEmail(txtEmail.getText());
+		
+		if (txtBirthDate.getValue() == null) {
+			exception.addError("birthDate", "Field can't be empty"); 
+		}
+		else {
+			Instant instant = Instant.from(txtBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
+			// o atStartOfDay() converte a data escolhida no horário do computador do usuário para instant, que é independente
+			
+			obj.setBirthDate(Date.from(instant));
+			// o setBirthDate espera um valor do tipo Date, assim sendo necessário converter o instant para Date
+		}
+		if (txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")) { 
+			exception.addError("baseSalary", "Field can't be empty"); 
+		}
+		obj.setBaseSalary(Utils.tryParseToDouble(txtBaseSalary.getText()));
+		
+		obj.setDepart(comboBoxDepart.getValue());
+		
 		if (exception.getError().size() > 0) { // testando se existe pelo menos um erro
 			throw exception;
 		}
@@ -193,10 +215,14 @@ public class SellerFormController implements Initializable {
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
 
-		if (fields.contains("name")) { // testando se o erro de campo vazio existe
-			labelErrorName.setText(errors.get("name")); // setando a mensagem de erro correspondente a chave "name" no
-														// labelerror da tela de cadastro
-		}
+		labelErrorName.setText((fields.contains("name") ? errors.get("name") : ""));
+		
+		labelErrorEmail.setText((fields.contains("email") ? errors.get("email") : ""));
+		
+		labelErrorBaseSalary.setText((fields.contains("baseSalary") ? errors.get("baseSalary") : ""));
+		
+		labelErrorBirthDate.setText((fields.contains("birthDate") ? errors.get("birthDate") : ""));
+
 	}
 
 	private void initializeComboBoxDepartment() {
