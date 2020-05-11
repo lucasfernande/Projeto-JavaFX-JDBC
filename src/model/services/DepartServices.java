@@ -22,4 +22,8 @@ public class DepartServices {
 			dao.update(obj); // caso seja diferente de nulo, ele irá apenas atualizar
 		}
 	}
+	
+	public void remove(Department obj) {
+		dao.deleteById(obj.getId());
+	}
 }
